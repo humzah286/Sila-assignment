@@ -14,4 +14,5 @@ RUN npm install
 EXPOSE 8000
 
 # Define the command to run your app using CMD which defines your runtime
-CMD [ "node", "build/src/index" ]
+# CMD [ "node", "build/src/index" ]
+CMD [ "npm", "run", "dev" ]
