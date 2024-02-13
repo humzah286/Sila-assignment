@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const index_1 = __importDefault(require("./routes/index"));
 const app = (0, express_1.default)();
 const port = 8000;
 app.use(express_1.default.urlencoded({ extended: false }));
@@ -14,6 +15,7 @@ app.get("/", (req, res) => {
 app.get("/get-random-text", (req, res) => {
     res.json({ random_text: "Node : Moments its musical age explain. But extremity sex now education concluded earnestly her continual. Oh furniture acuteness suspected continual ye something frankness. Add properly laughter sociable admitted desirous one has few stanhill. Opinion regular in perhaps another enjoyed no engaged he at. It conveying he continual ye suspected as necessary. Separate met packages shy for kindness." });
 });
+app.use('/api', index_1.default);
 app.listen(port, () => {
     console.log(`Listening on PORT : ${port}`);
 });
