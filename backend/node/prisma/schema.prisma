@@ -8,10 +8,46 @@ generator client {
 }
 
 model User {
-    id        Int         @id @default(autoincrement())
-    email     String      @unique
-    name      String?
-    password  String
-    phone     String?
-    address   String?
+  id        Int        @id @default(autoincrement())
+  email     String     @unique
+  name      String?
+  password  String
+  phone     String?
+  address   String?
 }
+
+model Review {
+  id            Int      @id @default(autoincrement())
+  overall       Float
+  verified      Boolean
+  reviewTime    String    
+  reviewerID    String
+  asin          String
+  style         Json?
+  reviewerName  String
+  reviewText    String    @db.LongText
+  summary       String    @db.LongText
+  unixReviewTime Int
+}
+
+model Rating {
+  id         Int     @id @default(autoincrement())
+  item       String
+  user       String
+  rating     Float
+  timestamp  Int
+}
+
+model Product {
+  asin            String      @id
+  title           String      @db.LongText
+  brand           String?     
+  main_cat        String?     
+  description     Json?
+  feature         Json?
+  rank            Json? 
+  date            String?     
+  price           String?     
+}
+
+

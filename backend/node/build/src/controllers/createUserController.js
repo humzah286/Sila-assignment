@@ -19,11 +19,6 @@ const prisma = new PrismaClient();
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { name, email, phone, address, password } = req.body;
-        console.log("name : ", name);
-        console.log("email : ", email);
-        console.log("phone : ", phone);
-        console.log("address : ", address);
-        console.log("password : ", password);
         // check for duplicate user
         const foundUser = yield prisma.user.findUnique({ where: { email } });
         if (foundUser) {
