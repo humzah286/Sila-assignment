@@ -22,7 +22,7 @@ const { parser } = require('stream-json');
 const { streamArray } = require('stream-json/streamers/StreamArray');
 const prisma = new client_1.PrismaClient();
 const basePath = "/data/";
-const batch_size = 1000;
+const batch_size = 3000;
 // async function readJsonFile(filePath: string): Promise<any[]> {
 //   const data = await readFile(filePath, 'utf8');
 //   return JSON.parse(data);
@@ -45,6 +45,9 @@ function process_csv(filePath, processData) {
                 }
             })
                 .on('end', () => {
+                if (dataArray.length > 0) {
+                    processData(dataArray);
+                }
                 resolve();
             })
                 .on('error', (error) => reject(error));
@@ -53,10 +56,12 @@ function process_csv(filePath, processData) {
 }
 const process_json = (filePath, processing_function) => {
     const readStream = fs.createReadStream(filePath.toString());
+    console.log("Reading file, ", filePath.toString());
     const processingStream = streamArray();
+    let index = 0;
+    let dataArray = [];
     processingStream.on('data', ({ key, value }) => {
-        let index = 0;
-        let dataArray = [];
+        index++;
         if (index < batch_size) {
             dataArray.push(value);
         }
@@ -68,7 +73,12 @@ const process_json = (filePath, processing_function) => {
     });
     // Handling errors and the end of the stream
     processingStream.on('error', console.error);
-    processingStream.on('end', () => console.log('Done processing JSON'));
+    processingStream.on('end', () => {
+        if (dataArray.length > 0) {
+            processing_function(dataArray);
+        }
+        console.log('Done processing JSON');
+    });
     // Setting up the pipeline
     pipeline(readStream, parser(), processingStream, (err) => {
         if (err) {
@@ -114,6 +124,7 @@ const populateRatings = (filePath) => {
     process_csv(filePath, add_rating_data_batch);
 };
 const populateProducts = (filePath) => {
+    console.log("Populating products");
     const add_meta_data = (data) => __awaiter(void 0, void 0, void 0, function* () {
         let maxLengthAllowed = 300;
         if (data.price && data.price.length > maxLengthAllowed) {
@@ -208,6 +219,7 @@ const populateProducts = (filePath) => {
     process_json(filePath, add_meta_data_batch);
 };
 const populateReviews = (filePath) => {
+    console.log("Populating reviews");
     const add_review_data = (data) => __awaiter(void 0, void 0, void 0, function* () {
         prisma.review.create({
             data: {
@@ -267,11 +279,11 @@ const populateReviews = (filePath) => {
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         console.log(`Start seeding ...`);
-        let productsFilePath = path.join(__dirname, '..', 'data', 'output.json');
+        const productsFilePath = path.join(__dirname, '..', 'data', 'output.json');
         populateProducts(productsFilePath);
-        let reviewsfilePath = path.join(__dirname, '..', 'data', 'Appliances_5.json');
+        const reviewsfilePath = path.join(__dirname, '..', 'data', 'Appliances_5.json');
         populateReviews(reviewsfilePath);
-        let ratingsFilePath = path.join(__dirname, '..', 'data', 'Appliances-reviews.csv');
+        const ratingsFilePath = path.join(__dirname, '..', 'data', 'Appliances-reviews.csv');
         populateRatings(ratingsFilePath);
         console.log(`Seeding finished.`);
     });
