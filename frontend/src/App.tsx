@@ -1,14 +1,12 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+
 
 function App() {
 
   return (
     <>
       <div>
-        <h1 className='bg-red-500 text-2xl'>
-          tailwind test
+        <h1 className='bg-red-500 text-2xl' style={{fontFamily: "PTSans"}}>
+          tailwind test Lorem ipsum, dolor sit amet consectetur adipisicing elit. Velit ipsam incidunt nihil dolorum, ducimus, molestiae voluptatibus qui illum amet eligendi reprehenderit quo eveniet?
         </h1>
       </div>
     </>
