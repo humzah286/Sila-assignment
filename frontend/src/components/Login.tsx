@@ -1,14 +1,17 @@
 
 const Login = () => {
 
+    const handleSubmit = (e: any) => {
+        e.preventDefault();
+        console.log("Form Submitted");
+    }
 
     return (
         <>
             <div className="flex justify-center items-center w-full h-screen">
 
-
                 <div className="w-full max-w-xs mx-2" style={{ fontFamily: "PTSans" }}>
-                    <form className="bg-white shadow-md rounded px-5 md:px-8 pt-3 md:pt-6 pb-4 md:pb-8 mb-4">
+                    <form className="bg-white shadow-md rounded px-5 md:px-8 pt-3 md:pt-6 pb-4 md:pb-8 mb-4" onSubmit={handleSubmit}>
                         <div className="flex justify-center items-center">
                         <h1 className="text-3xl text-gray-700 mb-5">Login</h1>  
                         </div>
@@ -29,7 +32,7 @@ const Login = () => {
                             <p>Don't have an account? <span className="text-red-500">Create One </span></p>
                         </div>
                         <div className="flex items-center justify-center">
-                            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+                            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
                                 Log In
                             </button>
                             {/* <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
