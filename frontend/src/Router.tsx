@@ -8,6 +8,8 @@ import {
     // Outlet
 } from "react-router-dom";
 import App from "./App";
+import Login from "./components/Login";
+import Signup from "./components/Signup";
 
 
 const children = [
@@ -31,14 +33,14 @@ const router: any = createBrowserRouter([
         element: <App />,
         children: children
     },
-    // {
-    //     path: "/login",
-    //     element: <Login />,
-    // },
-    // {
-    //     path: "/signup",
-    //     element: <Signup />,
-    // },
+    {
+        path: "/login",
+        element: <Login />,
+    },
+    {
+        path: "/signup",
+        element: <Signup />,
+    },
 
 ]);
 
