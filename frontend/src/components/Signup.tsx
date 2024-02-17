@@ -1,4 +1,5 @@
 
+import { Link } from 'react-router-dom';
 import { COUNTRIES } from '../helper/static';
 
 const Signup = () => {
@@ -106,6 +107,11 @@ const Signup = () => {
                         <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-zip" type="text" placeholder="90210" />
                     </div>
                 </div> */}
+
+                    <div className="flex justify-center items-center mb-5">
+                        <p>Already have an account? <span className="text-red-500"><Link to={'/login'}>Login </Link></span></p>
+                    </div>
+
 
                     <div className="flex items-center justify-center">
                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
