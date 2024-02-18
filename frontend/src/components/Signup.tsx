@@ -18,6 +18,8 @@ const Signup: React.FC = () => {
     const message = useRef('');
     const type = useRef('');
 
+    const dispatched = useRef(false);
+
     const [openModal, setModalOpen] = useState(false);
 
     const [loading, setLoading] = useState(false);
@@ -63,13 +65,18 @@ const Signup: React.FC = () => {
         }
 
         console.log("dispatching")
+        dispatched.current = true;
         dispatch(createUser({ name: firstName + ' ' + lastName, email: email, country: country, password: password }))
     }
 
     useEffect(() => {
+        if (!dispatched.current)
+            return
+
         if (res.status === 'loading') {
             setLoading(true);
         } else if (res.status === 'success') {
+            dispatched.current = false;
             window.location.href = '/';
         } else if (res.status === 'failed') {
             title.current = 'Error';
@@ -77,6 +84,7 @@ const Signup: React.FC = () => {
             type.current = 'error';
             setModalOpen(true);
         }
+
     }, [res])
 
 

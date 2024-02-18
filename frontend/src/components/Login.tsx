@@ -7,11 +7,15 @@ import { AppDispatch, RootState } from "../globalRedux/store";
 
 import { loginUser } from "../globalRedux/features/user/user";
 
+import { clearState } from "../globalRedux/features/user/user";
+
 const Login = () => {
 
     const title = useRef('');
     const message = useRef('');
     const type = useRef('');
+
+    const dispatched = useRef(false);
 
     const [openModal, setModalOpen] = useState(false);
 
@@ -34,22 +38,34 @@ const Login = () => {
             setModalOpen(true);
             return;
         } 
-
+        
+        dispatched.current = true;
         dispatch(loginUser({ email, password }))
-
-
     }
 
     useEffect(() => {
+        console.log("dispatched clear ")
+        dispatch(clearState())
+    }, [])
+
+    useEffect(() => {
+        console.log('dispatched = ', dispatched.current)
+        if (dispatched.current == false) {
+            return;
+        }
+
+        console.log("res in login: ", res)   
         if (res.status == "success") {
+            dispatched.current = false;
             window.location.href = "/";
         } else if (res.status == "failed") {
             title.current = "Failed";
             message.current = res.message;
             type.current = "failed";
             setModalOpen(true);
-        }
-    }, [res])
+        };
+
+    }, [res.status])
 
     return (
         <>

@@ -5,7 +5,7 @@ import axios from 'axios';
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 export const getUser = createAsyncThunk(
-    'api/user',
+    'api/user/get-user',
     async () => {
         try {
             const response = await axios({
@@ -37,7 +37,7 @@ export const createUser = createAsyncThunk(
                 method: 'post',
                 url: `${BACKEND_URL}/api/user/create-account`,
                 data: data,
-                // withCredentials: true,
+                withCredentials: true,
             })
 
             console.log("res: ", response)
@@ -59,7 +59,7 @@ export const loginUser = createAsyncThunk(
                 method: 'post',
                 url: `${BACKEND_URL}/api/user/sign-in`,
                 data: data,
-                // withCredentials: true,
+                withCredentials: true,
             })
 
             console.log("res: ", response)
@@ -97,7 +97,13 @@ const initialState = {
 const userSlice = createSlice({
     name: "user",
     initialState,
-    reducers: {},
+    reducers: {
+        clearState: (state) => {
+            console.log("clearing state")
+            state.status = "";
+            state.message = "";
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(createUser.pending, (state, action) => {
@@ -155,23 +161,22 @@ const userSlice = createSlice({
                 state.status = 'success';
                 if (action.payload.status == 200) {
                     console.log("action.payload : ", action.payload)
-                    try {
-                        state.first_name = action.payload.data.message.first_name;
-                        state.last_name = action.payload.data.message.last_name;
-                        state.email = action.payload.data.message.email;
-                        state.phone = action.payload.data.message.phone_number;
-                        state.country = action.payload.data.message.country;
-                        state.gender = action.payload.data.message.gender;
-                    }
-                    catch (error) {
-                        console.log("error: ", error)
-                    }
-
+                    state.name = action.payload.data.user.name;
+                    state.email = action.payload.data.user.email;
+                    state.country = action.payload.data.user.country;
+                } else {
+                    state.name = "";
+                    state.email = "";
+                    state.country = "";
                 }
+
                 console.log("WORKING OK!")
             })
             .addCase(getUser.rejected, (state, action) => {
                 state.status = 'failed';
+                state.name = "";
+                state.email = "";
+                state.country = "";
             })
 
             .addCase(logoutUser.pending, (state, action) => {
@@ -202,3 +207,4 @@ const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
+export const { clearState } = userSlice.actions;

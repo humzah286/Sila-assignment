@@ -1,22 +1,30 @@
-import React, { useState } from 'react';
-import { XMarkIcon, Bars3Icon } from '@heroicons/react/20/solid';
+import React, { useEffect, useState } from 'react';
+import { XMarkIcon, Bars3Icon, UserCircleIcon } from '@heroicons/react/20/solid';
 import AmazonLogo from '/amazon-logo2.svg';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { RootState } from '../globalRedux/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../globalRedux/store';
+import { getUser } from '../globalRedux/features/user/user';
 
 const Navbar: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
 
+    const dispatch = useDispatch<AppDispatch>();
     const res = useSelector((state: RootState) => { return state.user });
-
-    console.log("1234user : ", res.name);
 
     const Options = [
         { name: 'Home', href: '/' },
         { name: 'About', href: '/about' },
         { name: 'Edit Dataset', href: '/services' },
     ]
+
+    useEffect(() => { 
+        dispatch(getUser()) 
+    }, [])
+
+    useEffect(() => {
+        
+    }, [res])
 
     return (
 
@@ -43,7 +51,11 @@ const Navbar: React.FC = () => {
                     </div>
                     <div className="flex justify-center items-center">
                         <Link to={'/signup'}><button className="text-SecondaryColor bg-NavbarColor border-2 border-SecondaryColor px-3 py-1 rounded-lg w-24 font-bold">Sign Up</button></Link>
-                    </div></> : <div className="flex justify-center items-center text-white">res.name</div>}
+                    </div></> : 
+                    <div className="flex justify-center items-center text-white gap-2">
+                        <UserCircleIcon className="h-8 w-8" />    
+                        <h1>Hi, {res.name}</h1>
+                    </div>}
                 </div>
 
                 <div className="flex justify-center items-center md:hidden">
