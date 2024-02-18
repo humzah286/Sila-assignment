@@ -55,13 +55,13 @@ const refreshJWT = (req: Request, res: Response) => {
     }
 
     const accessJWT = jwt.sign(
-        { id: decoded.id },
+        { id: decoded.id, email: decoded.email },
         process.env.ACCESS_TOKEN_SECRET || "access-token",
         { expiresIn: process.env.ACCESS_TOKEN_EXPIRY_TIME_STRING || "60s" }
     );
 
     const refreshJWT = jwt.sign(
-        { id: decoded.id },
+        { id: decoded.id, email: decoded.email},
         process.env.REFRESH_TOKEN_SECRET || "refresh-token",
         { expiresIn: process.env.REFRESH_TOKEN_EXPIRY_TIME_STRING || "7d" }
     );

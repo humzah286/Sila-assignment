@@ -39,8 +39,8 @@ const refreshJWT = (req, res) => {
         console.log("returning false because of missing email in decoded object");
         return false;
     }
-    const accessJWT = jsonwebtoken_1.default.sign({ id: decoded.id }, process.env.ACCESS_TOKEN_SECRET || "access-token", { expiresIn: process.env.ACCESS_TOKEN_EXPIRY_TIME_STRING || "60s" });
-    const refreshJWT = jsonwebtoken_1.default.sign({ id: decoded.id }, process.env.REFRESH_TOKEN_SECRET || "refresh-token", { expiresIn: process.env.REFRESH_TOKEN_EXPIRY_TIME_STRING || "7d" });
+    const accessJWT = jsonwebtoken_1.default.sign({ id: decoded.id, email: decoded.email }, process.env.ACCESS_TOKEN_SECRET || "access-token", { expiresIn: process.env.ACCESS_TOKEN_EXPIRY_TIME_STRING || "60s" });
+    const refreshJWT = jsonwebtoken_1.default.sign({ id: decoded.id, email: decoded.email }, process.env.REFRESH_TOKEN_SECRET || "refresh-token", { expiresIn: process.env.REFRESH_TOKEN_EXPIRY_TIME_STRING || "7d" });
     res.cookie('access_token', accessJWT, {
         maxAge: parseInt(process.env.ACCESS_TOKEN_EXPIRY_TIME || "60000"),
         httpOnly: true
