@@ -3,9 +3,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const createUserController_1 = __importDefault(require("../controllers/createUserController"));
-const signinUserController_1 = __importDefault(require("../controllers/signinUserController"));
-const getUserController_1 = __importDefault(require("../controllers/getUserController"));
+const createUserController_1 = __importDefault(require("../controllers/user/createUserController"));
+const signinUserController_1 = __importDefault(require("../controllers/user/signinUserController"));
+const getUserController_1 = __importDefault(require("../controllers/user/getUserController"));
 const express_1 = __importDefault(require("express"));
 const router = express_1.default.Router();
 const authJWT_1 = __importDefault(require("../middleware/authJWT"));

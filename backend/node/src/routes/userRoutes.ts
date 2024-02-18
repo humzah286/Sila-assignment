@@ -1,7 +1,7 @@
 
-import  createUser  from "../controllers/createUserController";
-import signInUser from "../controllers/signinUserController";
-import getUser from "../controllers/getUserController";
+import  createUser  from "../controllers/user/createUserController";
+import signInUser from "../controllers/user/signinUserController";
+import getUser from "../controllers/user/getUserController";
 
 
 import express from "express";

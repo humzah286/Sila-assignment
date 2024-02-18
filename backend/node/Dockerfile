@@ -9,6 +9,7 @@ COPY . .
 # COPY script.sh .
 
 # Install project dependencies
+RUN npm cache clean --force
 RUN npm install
 
 RUN npx prisma generate

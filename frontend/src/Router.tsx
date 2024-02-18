@@ -11,11 +11,13 @@ import App from "./App";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 
+import Charts from "./components/Charts";
+
 
 const children = [
     {
         path: "",
-        element: <h2>Hello </h2>
+        element: <Charts />
     },
     {
         path: "child1",
