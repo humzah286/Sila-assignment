@@ -10,7 +10,7 @@ export const getUser = createAsyncThunk(
         try {
             const response = await axios({
                 method: 'get',
-                url: `${BACKEND_URL}/api/getuser`,
+                url: `${BACKEND_URL}/api/user/get-user`,
                 withCredentials: true,
             })
 

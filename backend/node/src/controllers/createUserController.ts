@@ -55,13 +55,13 @@ const createUser = async (req: Request, res: Response) => {
         }
 
         const access_token = jwt.sign(
-            { _id: user._id, email: user.email },
+            { id: user.id, email: user.email },
             process.env.ACCESS_TOKEN_SECRET || "access-token",
             { expiresIn: process.env.ACCESS_TOKEN_EXPIRY_TIME_STRING || "60s"}
         )
 
         const refresh_token = jwt.sign(
-            { _id: user._id, email: user.email },
+            { id: user.id, email: user.email },
             process.env.REFRESH_TOKEN_SECRET || "refresh-token",
             { expiresIn: process.env.REFRESH_TOKEN_EXPIRY_TIME_STRING || "7d" }
         )
@@ -80,7 +80,7 @@ const createUser = async (req: Request, res: Response) => {
             status: "Success",
             message: "User created" ,
             user: {
-                id: user._id,
+                id: user.id,
                 name: user.name,
                 email: user.email,
                 country: user.country

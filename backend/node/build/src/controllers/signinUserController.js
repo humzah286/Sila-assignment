@@ -23,8 +23,8 @@ const signInUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             return res.status(400).json({ status: "error", 'message': 'Email and password are required.' });
         const user = yield prisma.user.findUnique({ where: { email } });
         if (user && (yield bcrypt_1.default.compare(password, user.password))) {
-            const access_token = jsonwebtoken_1.default.sign({ _id: user._id, email: user.email }, process.env.ACCESS_TOKEN_SECRET || "access-token", { expiresIn: process.env.ACCESS_TOKEN_EXPIRY_TIME_STRING || "60s" });
-            const refresh_token = jsonwebtoken_1.default.sign({ _id: user._id, email: user.email }, process.env.REFRESH_TOKEN_SECRET || "refresh-token", { expiresIn: process.env.REFRESH_TOKEN_EXPIRY_TIME_STRING || "7d" });
+            const access_token = jsonwebtoken_1.default.sign({ id: user.id, email: user.email }, process.env.ACCESS_TOKEN_SECRET || "access-token", { expiresIn: process.env.ACCESS_TOKEN_EXPIRY_TIME_STRING || "60s" });
+            const refresh_token = jsonwebtoken_1.default.sign({ id: user.id, email: user.email }, process.env.REFRESH_TOKEN_SECRET || "refresh-token", { expiresIn: process.env.REFRESH_TOKEN_EXPIRY_TIME_STRING || "7d" });
             res.cookie('access_token', access_token, {
                 maxAge: parseInt(process.env.ACCESS_TOKEN_EXPIRY_TIME || "60000"),
                 httpOnly: true
@@ -37,7 +37,7 @@ const signInUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                 status: "Success",
                 message: "User successfully signed in",
                 user: {
-                    id: user._id,
+                    id: user.id,
                     name: user.name,
                     email: user.email,
                     country: user.country
