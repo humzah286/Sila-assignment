@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
 import { XMarkIcon, Bars3Icon } from '@heroicons/react/20/solid';
-import AmazonLogo from '../assets/amazon-logo2.svg';
+import AmazonLogo from '/amazon-logo2.svg';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../globalRedux/store';
 
-const Navbar = () => {
+const Navbar: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
+
+    const res = useSelector((state: RootState) => { return state.user });
+
+    console.log("1234user : ", res.name);
 
     const Options = [
         { name: 'Home', href: '/' },
@@ -32,12 +38,12 @@ const Navbar = () => {
                 </div>
 
                 <div className='hidden md:flex justify-center gap-3 md:ml-6'>
-                    <div className="flex justify-center items-center">
-                        <button className="text-white bg-SecondaryColor border-2 border-SecondaryColor px-1 py-1 rounded-lg w-24 font-bold">Login</button>
+                    {res.name == "" ? <><div className="flex justify-center items-center">
+                        <Link to={'/login'}><button className="text-white bg-SecondaryColor border-2 border-SecondaryColor px-1 py-1 rounded-lg w-24 font-bold">Login</button></Link>
                     </div>
                     <div className="flex justify-center items-center">
-                        <button className="text-SecondaryColor bg-NavbarColor border-2 border-SecondaryColor px-3 py-1 rounded-lg w-24 font-bold">Sign Up</button>
-                    </div>
+                        <Link to={'/signup'}><button className="text-SecondaryColor bg-NavbarColor border-2 border-SecondaryColor px-3 py-1 rounded-lg w-24 font-bold">Sign Up</button></Link>
+                    </div></> : <div className="flex justify-center items-center text-white">res.name</div>}
                 </div>
 
                 <div className="flex justify-center items-center md:hidden">
@@ -62,10 +68,10 @@ const Navbar = () => {
                 </div>
 
                 <div className="flex items-center py-2 px-5 ">
-                    <button className="text-white bg-SecondaryColor border-2 border-SecondaryColor px-1 py-1 rounded-lg w-24 font-bold">Login</button>
+                    <Link to={'/login'}><button className="text-white bg-SecondaryColor border-2 border-SecondaryColor px-1 py-1 rounded-lg w-24 font-bold">Login</button></Link>
                 </div>
                 <div className="flex items-center py-2 px-5 ">
-                    <button className="text-SecondaryColor bg-NavbarColor border-2 border-SecondaryColor px-3 py-1 rounded-lg w-24 font-bold">Sign Up</button>
+                    <Link to={'/signup'}><button className="text-SecondaryColor bg-NavbarColor border-2 border-SecondaryColor px-3 py-1 rounded-lg w-24 font-bold">Sign Up</button></Link>
                 </div>
 
                 <div className='h-3'></div>

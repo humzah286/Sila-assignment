@@ -1,10 +1,32 @@
+import { useState } from "react";
 
-const Modal = (title: string, message: string,  type: string) => {
+type ModalProps = {
+    title: string;
+    message: string;
+    type: string;
+    open: boolean;
+    setOpen: Function
+};
+
+const Modal: React.FC<ModalProps> = ({ title, message, type, open, setOpen }) => {
+
+
+    const [close, setClose] = useState(false);
+
+    if (!open || close) return <></>;
+
+    const handleClose = async () => {
+        setClose(false);
+        setOpen(false);
+    }
+
     return (
-        <div className="">
-            <h2>{title}</h2>
-            <p>{message}</p>
-            <button className={type}>Close</button>
+        <div className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center" onClick={handleClose}>
+            <div className="w-52 h-52 bg-red-400">
+                <h2>{title}</h2>
+                <p>{message}</p>
+            </div>
+
         </div>
     )
 }

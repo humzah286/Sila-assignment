@@ -1,9 +1,12 @@
 import express, { Express, Request, Response } from 'express';
 import defaultRouter from './routes/index';
+import cors from 'cors';
+import corsOptions from './config/corsOptions';
 
 const app: Express = express();
 const port: string | number = 8000;
 
+app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 

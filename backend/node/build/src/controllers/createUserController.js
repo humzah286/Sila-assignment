@@ -18,7 +18,7 @@ const { PrismaClient, Prisma } = require('@prisma/client');
 const prisma = new PrismaClient();
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { name, email, phone, address, password } = req.body;
+        const { name, email, country, password } = req.body;
         // check for duplicate user
         const foundUser = yield prisma.user.findUnique({ where: { email } });
         if (foundUser) {
@@ -27,13 +27,13 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                 message: "User already exists"
             });
         }
-        if (name === "" || email === "" || phone === "" || address === "") {
+        if (name === "" || email === "" || country === "") {
             return res.status(400).json({
                 status: "Error",
                 message: "Please fill out all fields"
             });
         }
-        else if (!name || !email || !phone || !address || !password) {
+        else if (!name || !email || !country || !password) {
             return res.status(400).json({
                 status: "Error",
                 message: "Please fill out all fields"
@@ -49,8 +49,7 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         let user = yield prisma.user.create({ data: {
                 name,
                 email,
-                phone,
-                address,
+                country,
                 password: hashedPwd
             } });
         if (!user) {
@@ -71,7 +70,13 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         });
         res.status(201).json({
             status: "Success",
-            message: "User created"
+            message: "User created",
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                country: user.country
+            }
         });
     }
     catch (err) {

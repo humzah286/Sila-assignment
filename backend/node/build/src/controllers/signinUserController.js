@@ -33,7 +33,16 @@ const signInUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                 maxAge: parseInt(process.env.REFRESH_TOKEN_EXPIRY_TIME || "604800000"),
                 httpOnly: true
             });
-            return res.status(200).json({ status: "Success", message: "User successfully signed in" });
+            return res.status(200).json({
+                status: "Success",
+                message: "User successfully signed in",
+                user: {
+                    id: user._id,
+                    name: user.name,
+                    email: user.email,
+                    country: user.country
+                }
+            });
         }
         else {
             return res.status(400).json({ status: "Error", message: "Invalid email/password" });

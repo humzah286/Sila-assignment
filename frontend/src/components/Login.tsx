@@ -1,8 +1,22 @@
 
 import { Link } from "react-router-dom";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
+import Modal from "./Modal";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../globalRedux/store";
+
+import { loginUser } from "../globalRedux/features/user/user";
 
 const Login = () => {
+
+    const title = useRef('');
+    const message = useRef('');
+    const type = useRef('');
+
+    const [openModal, setModalOpen] = useState(false);
+
+    const dispatch = useDispatch<AppDispatch>();
+    const res = useSelector((state: RootState) => { return state.user });
 
     const emailValue = React.createRef<HTMLInputElement>();
     const passwordValue = React.createRef<HTMLInputElement>();
@@ -10,12 +24,36 @@ const Login = () => {
     const handleSubmit = (e: any) => {
         e.preventDefault();
 
-        console.log("Email Value --->", emailValue.current?.value);
-        console.log("Password Value --->", passwordValue.current?.value);
+        let email = emailValue.current?.value;
+        let password = passwordValue.current?.value;
+    
+        if (email?.trim() == "" || password?.trim() == "") {
+            title.current = "Failed";
+            message.current = "Please fill in all fields";
+            type.current = "failed";
+            setModalOpen(true);
+            return;
+        } 
+
+        dispatch(loginUser({ email, password }))
+
+
     }
+
+    useEffect(() => {
+        if (res.status == "success") {
+            window.location.href = "/";
+        } else if (res.status == "failed") {
+            title.current = "Failed";
+            message.current = res.message;
+            type.current = "failed";
+            setModalOpen(true);
+        }
+    }, [res])
 
     return (
         <>
+            <Modal title={title.current} message={message.current} type={type.current} open={openModal} setOpen={setModalOpen} />
             <div className="flex justify-center items-center w-full h-screen">
 
                 <div className="w-full max-w-xs mx-2" style={{ fontFamily: "PTSans" }}>
@@ -34,9 +72,21 @@ const Login = () => {
                                 Password
                             </label>
                             <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="**********" ref={passwordValue} />
+                            {/* show password option */}
+                            <input type="checkbox" className="mr-2 leading-tight" onChange={() => {
+                                const passwordInput = document.getElementById('password') as HTMLInputElement;
+                                if (passwordInput.type === 'password') {
+                                    passwordInput.type = 'text';
+                                } else {
+                                    passwordInput.type = 'password';
+                                }
+                            }} /> 
+                            <label className="text-gray-700 text-sm mb-2" htmlFor="showPassword" >
+                                Show Password
+                            </label>
                             {/* <p className="text-red-500 text-xs italic hidden">Please choose a password.</p> */}
                         </div>
-                        <div className="flex justify-center items-center mb-5">
+                        <div className="flex justify-center items-center mt-4 mb-5">
                             <p>Don't have an account? <span className="text-red-500"><Link to={'/signup'}>Create One </Link></span></p>
                         </div>
                         <div className="flex items-center justify-center">

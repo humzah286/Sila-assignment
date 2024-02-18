@@ -10,7 +10,7 @@ const prisma = new PrismaClient();
 const createUser = async (req: Request, res: Response) => {
     try {
 
-        const { name, email, phone, address, password } = req.body;
+        const { name, email, country, password } = req.body;
 
         // check for duplicate user
         const foundUser = await prisma.user.findUnique({ where: { email } });
@@ -21,12 +21,12 @@ const createUser = async (req: Request, res: Response) => {
                 message: "User already exists" })
         }
         
-        if (name === "" || email === "" || phone === "" || address === "") {
+        if (name === "" || email === "" || country === "") {
             return res.status(400).json({
                 status: "Error",
                 message: "Please fill out all fields" 
             })
-        } else if (!name || !email || !phone || !address || !password) {
+        } else if (!name || !email || !country || !password) {
             return res.status(400).json({ 
                 status: "Error",
                 message: "Please fill out all fields" 
@@ -43,8 +43,7 @@ const createUser = async (req: Request, res: Response) => {
         let user = await prisma.user.create({ data: {
             name,
             email,
-            phone,
-            address, 
+            country, 
             password: hashedPwd
         }})
 
@@ -79,7 +78,13 @@ const createUser = async (req: Request, res: Response) => {
 
         res.status(201).json({
             status: "Success",
-            message: "User created" 
+            message: "User created" ,
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                country: user.country
+            }
         })
 
     } catch(err: any) {

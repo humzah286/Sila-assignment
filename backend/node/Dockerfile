@@ -12,8 +12,10 @@ COPY . .
 RUN npm install
 
 RUN npx prisma generate
-RUN npx prisma migrate dev --name init
-RUN npx prisma db seed 
+# RUN node db-wait.js
+# RUN npx prisma migrate dev --name init
+# RUN npx prisma db seed 
+# RUN node "console.log('APply migrations here')"
 
 # CMD ["npx", "prisma", "db", "seed"]
 
