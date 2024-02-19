@@ -62,7 +62,7 @@ To setup the backend application:
 
 - The frontend application is accessible at http://localhost:5173 (or another port if configured differently).
 - phpMyAdmin can be accessed at http://localhost:8080 for database management.
-- Backend is configured at HTTP://localhost:3000
+- Backend is configured at http://localhost:3000
 
 ### API Documentation
 
