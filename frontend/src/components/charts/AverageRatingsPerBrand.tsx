@@ -96,12 +96,15 @@ const AverageRatingsPerBrand = () => {
 
             {/* <LineChart chartData={ratings} options={options_ratings} /> */}
 
-            <div className="flex flex-col gap-10 ">
+            <div className="flex flex-col justify-start">
+
+            
             <div className="">
                 showing {left_index.current} to {right_index.current} of {total_length.current} entries
             </div>
+            <div className="flex flex-col gap-10 justify-start">
 
-                <div className="flex justify-center items-center gap-10">
+                <div className="flex justify-center items-center gap-10 mt-4">
                     <button onClick={() => {
                         console.log("clicked left_index.current: ", left_index.current)
                         if (left_index.current - 50 >= 0) {
@@ -149,6 +152,7 @@ const AverageRatingsPerBrand = () => {
 
                 </div>
 
+            </div>
             </div>
         </>
     )

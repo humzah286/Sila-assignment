@@ -15,7 +15,7 @@ const Navbar: React.FC = () => {
     const Options = [
         { name: 'Home', href: '/' },
         { name: 'About', href: '/about' },
-        { name: 'Edit Dataset', href: '/services' },
+        { name: 'Give Rating', href: '#ratings' },
     ]
 
     useEffect(() => { 
@@ -38,8 +38,8 @@ const Navbar: React.FC = () => {
                 <div className="hidden md:flex justify-center items-center gap-5 lg:gap-10">
                     {Options.map((option, index) => (
                         <div>
-                            {/* <a key={index} href={option.href} className="hover:text-gray-300">{option.name}</a> */}
-                            <Link to={option.href} className="hover:text-gray-300" key={index}>{option.name}</Link>
+                            <a key={index} href={option.href} className="hover:text-gray-300">{option.name}</a>
+                            {/* <Link to={option.href} className="hover:text-gray-300" key={index}>{option.name}</Link> */}
                         </div>
                     ))}
 
@@ -73,18 +73,22 @@ const Navbar: React.FC = () => {
                 <div className="flex flex-col px-5 md:px-8">
                     {Options.map((option, index) => (
                         <div className='flex justify-start items-center py-2'>
-                            {/* <a key={index} href={option.href} className="hover:text-gray-300">{option.name}</a> */}
-                            <Link to={option.href} className="hover:text-gray-300" key={index}>{option.name}</Link>
+                            <a key={index} href={option.href} className="hover:text-gray-300">{option.name}</a>
+                            {/* <Link to={option.href} className="hover:text-gray-300" key={index}>{option.name}</Link> */}
                         </div>
                     ))}
                 </div>
 
-                <div className="flex items-center py-2 px-5 ">
-                    <Link to={'/login'}><button className="text-white bg-SecondaryColor border-2 border-SecondaryColor px-1 py-1 rounded-lg w-24 font-bold">Login</button></Link>
-                </div>
-                <div className="flex items-center py-2 px-5 ">
-                    <Link to={'/signup'}><button className="text-SecondaryColor bg-NavbarColor border-2 border-SecondaryColor px-3 py-1 rounded-lg w-24 font-bold">Sign Up</button></Link>
-                </div>
+                {res.name == "" ? <><div className="flex justify-center items-center">
+                        <Link to={'/login'}><button className="text-white bg-SecondaryColor border-2 border-SecondaryColor px-1 py-1 rounded-lg w-24 font-bold">Login</button></Link>
+                    </div>
+                    <div className="flex justify-center items-center">
+                        <Link to={'/signup'}><button className="text-SecondaryColor bg-NavbarColor border-2 border-SecondaryColor px-3 py-1 rounded-lg w-24 font-bold">Sign Up</button></Link>
+                    </div></> : 
+                    <div className="flex justify-center items-center text-white gap-2">
+                        <UserCircleIcon className="h-8 w-8" />    
+                        <h1>Hi, {res.name}</h1>
+                    </div>}
 
                 <div className='h-3'></div>
             </div>}

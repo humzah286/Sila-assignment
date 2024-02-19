@@ -19,14 +19,6 @@ const children = [
         path: "",
         element: <Charts />
     },
-    {
-        path: "child1",
-        element: <h1>Child 1</ h1 >
-    },
-    {
-        path: "child2",
-        element: <h1>Child 2 </h1>
-    }
 ]
 
 const router: any = createBrowserRouter([
