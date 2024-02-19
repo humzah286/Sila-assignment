@@ -1,7 +1,7 @@
 
 # Amazon Dataset Analysis
 
-This project is a full-stack web application designed to analyze and visualize insights from an Amazon appliance dataset. Utilizing modern technologies including Node.js with TypeScript for the backend, and React with TypeScript, Redux, Axios, and Tailwind CSS for the frontend, it offers a dynamic and responsive user interface for data exploration. The backend is containerized with Docker, facilitating easy setup and scalability, and uses MySQL for data storage with Prisma for ORM, and phpMyAdmin for database management.
+This project is a full-stack web application designed to analyze and visualize insights from an Amazon appliance dataset. Utilizing modern technologies including Node.js with TypeScript for the backend, and React with TypeScript using Vite, Redux, Axios, and Tailwind CSS for the frontend, it offers a dynamic and responsive user interface for data exploration. The backend is containerized with Docker, facilitating easy setup and scalability, and uses MySQL for data storage with Prisma for ORM, and phpMyAdmin for database management.
 
 ## Features
 
