@@ -18,7 +18,7 @@ const getAverageRatings = (req, res) => __awaiter(void 0, void 0, void 0, functi
         FROM \`Product\` p
         JOIN \`Rating\` r ON p.asin = r.item
         GROUP BY p.brand
-        HAVING COUNT(r.rating) >= 100;
+        HAVING COUNT(r.rating) >= 200;
     `;
     console.log(result);
     const result_string = JSON.stringify(result, (key, value) => typeof value === 'bigint' ? value.toString() : value // Convert BigInt to a string

@@ -15,7 +15,7 @@ const getAverageRatings = async (req: Request, res: Response) => {
         FROM \`Product\` p
         JOIN \`Rating\` r ON p.asin = r.item
         GROUP BY p.brand
-        HAVING COUNT(r.rating) >= 100;
+        HAVING COUNT(r.rating) >= 200;
     `;
 
     console.log(result);
